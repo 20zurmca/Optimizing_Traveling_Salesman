@@ -10,6 +10,7 @@ import org.junit.Test;
  *
  * @author  Cameron Zurmuhl
  * @version 4/23/2017 8:21 p.m
+ * Revised by Cameron Zurmuhl 4/29/2017 3:23 p.m
  */
 public class TruckTest
 {
@@ -48,14 +49,14 @@ public class TruckTest
         Warehouse w = new Warehouse(57, new Location(23, 43),5);
         Truck t = new Truck(w);
         
-        t.loadCargo(new Cargo(50));
+        t.loadCargo(new Cargo(50, "milk", "cargo1"));
         
         //check get methods
         assertEquals(t.getWeight(), 50);
         assertEquals(t.getCargoCount(), 1);
         
         //try to add above the weight and check to make sure cargo count did no go up and weight stayed the same
-        t.loadCargo(new Cargo(470));
+        t.loadCargo(new Cargo(470, "milk", "cargo2"));
         assertEquals(t.getWeight(), 50);
         assertEquals(t.getCargoCount(), 1);
     }
