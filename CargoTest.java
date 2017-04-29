@@ -18,7 +18,7 @@ public class CargoTest
     {
         //create new Cargo
         
-        Cargo c = new Cargo(10);
+        Cargo c = new Cargo(10, "Beans", "Shop3");
         
         //get the weight and assert that it's 10
         assertEquals(c.getWeight(), 10);

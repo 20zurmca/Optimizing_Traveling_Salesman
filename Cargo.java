@@ -4,6 +4,7 @@
  *
  * @author Cameron Zurmuhl 
  * @version 4/23/2017 5:38 p.m
+ * Revised by Cameron Zurmuhl 4/29/2017 3:21 p.m
  */
 public class Cargo
 {
@@ -11,13 +12,19 @@ public class Cargo
     
     private int weight; //the weight of the cargo
     
+    private String shopID; //the ID the cargo must go to 
+    
+    private String cargoID; //the ID of the cargo
+    
     /**
      * Constructor for class Cargo 
      * @param w the weight of the cargo
      */
-    public Cargo(int w)
+    public Cargo(int w, String shopID, String cargoID)
     {
         this.weight = w;
+        this.shopID = shopID;
+        this.cargoID = cargoID;
     }
     
     //////////////METHODS//////////////////
