@@ -6,6 +6,7 @@
  * 
  * @author Cameron Zurmuhl 
  * @version 4/23/2017 6:49 p.m
+ * Revised by Cameron Zurmuhl 4/29/2017 3:27 p.m
  */
 public class Truck
 {
@@ -120,5 +121,12 @@ public class Truck
     public void setShop(Shop s)
     {
         shopToDeliver = s;
+    }
+    
+    /**
+     * Method planRoute plans the truck's delivery route 
+     */
+    public void planRoute()
+    {
     }
 }
