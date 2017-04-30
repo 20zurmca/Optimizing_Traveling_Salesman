@@ -10,6 +10,8 @@ import org.junit.Test;
  *
  * @author  Cameron Zurmuhl 
  * @version 4/23/2017 5:48 p.m
+ * Revised by Cameron Zurmuhl 4/30/2017 12:39 p.m
+ * Revised by Cameron Zurmuhl 4/30/2017 12:40 p.m
  */
 public class CargoTest
 {
@@ -18,7 +20,7 @@ public class CargoTest
     {
         //create new Cargo
         
-        Cargo c = new Cargo(10, "Beans", "Shop3");
+        Cargo c = new Cargo(10, 10, 3);
         
         //get the weight and assert that it's 10
         assertEquals(c.getWeight(), 10);
