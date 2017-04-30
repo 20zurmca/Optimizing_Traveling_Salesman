@@ -5,10 +5,8 @@ import java.util.Stack;
  * @author Emmett O'Toole 
  * @version 4-23-17
  */
-public class Warehouse implements Facility 
+public class Warehouse extends Facility
 {
-    // instance variables 
-    private int id;
     //The location of the warehouse
     private Location position;
     //A stack of trucks
@@ -22,7 +20,7 @@ public class Warehouse implements Facility
      */
     public Warehouse(int id,Location a,int numberOfTrucks)
     {
-        this.id=id;
+        super(id, 'W');
         this.position=a;
         //Initializes the stack of trucks
         this.trucks=new Stack<Truck>();
@@ -49,7 +47,7 @@ public class Warehouse implements Facility
      * @return int the unique id of the warehouse
      */
     public int getID(){
-        return this.id;
+        return this.ID;
     }
 
     /**
@@ -81,7 +79,7 @@ public class Warehouse implements Facility
     
     public String toString()
     {
-        return "W" + id;
+        return "W" + ID;
         
     }
 }

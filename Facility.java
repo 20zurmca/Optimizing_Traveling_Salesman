@@ -8,8 +8,19 @@
  */
 public abstract class Facility implements Comparable <Facility>
 {
-    private int ID;
-    private Character letter;
+    protected int ID;
+    protected Character letter;
+    
+    /**
+     * Constructor for class Facility
+     * @param ID the ID for the Facility\
+     */
+    public Facility(int id, Character identifier )
+    {
+        this.ID = id;
+        letter = identifier;
+    }
+    
     /**
      * Distance from method
      * 

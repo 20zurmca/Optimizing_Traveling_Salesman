@@ -5,18 +5,18 @@ import java.util.ArrayList;
  * @author Emmett O'Toole 
  * @version 4-29-17
  */
-public class Shop implements Facility 
+public class Shop extends Facility 
 {
     //Instance Variables
     private ArrayList<Cargo>orders;
     private Location shopLoc;
-    private int id;
     /**
      * Constructor for Shop 
      * @param Location a the location of the shop
      * @param int id the unique id of the shop
      */
     public Shop(int id, Location a){
+        super(id, 'S');
         this.orders=new ArrayList<Cargo>();
         this.shopLoc=a;
     }
@@ -55,11 +55,11 @@ public class Shop implements Facility
      * @return int the unique id of the warehouse
      */
     public int getID(){
-        return this.id;
+        return this.ID;
     }
     
     public String toString()
     {
-        return "S" + id;
+        return "S" + ID;
     }
 }
