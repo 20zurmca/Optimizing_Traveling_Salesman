@@ -19,7 +19,6 @@ public class Shop implements Facility
     public Shop(int id, Location a){
         this.orders=new ArrayList<Cargo>();
         this.shopLoc=a;
-
     }
 
     /**
@@ -57,5 +56,10 @@ public class Shop implements Facility
      */
     public int getID(){
         return this.id;
+    }
+    
+    public String toString()
+    {
+        return "S" + id;
     }
 }

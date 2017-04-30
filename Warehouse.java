@@ -67,6 +67,7 @@ public class Warehouse implements Facility
     public int  getNumOfTrucks(){
         return this.numOfTrucks;
     }
+    
     /**
      * Get next truck method returns a truck from the top of the stack
      * @return Truck the truck from the top of the stack
@@ -76,5 +77,11 @@ public class Warehouse implements Facility
         numOfTrucks--;
         //Pops the truck and returns it
         return trucks.pop();
+    }
+    
+    public String toString()
+    {
+        return "W" + id;
+        
     }
 }

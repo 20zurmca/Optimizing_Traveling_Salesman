@@ -1,5 +1,6 @@
 import java.util.LinkedList;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Queue;
 /**
  *A DirectedGraph class
@@ -12,21 +13,21 @@ public class DirectedGraph
     /**
      * Class DirectedGraphNode is an inner class that repersent the verticies in the graph
      */
-    private static class DirectedGraphNode
+    private static class DirectedGraphNode implements Comparable<DirectedGraphNode>
     {
         /////////////////////////////FIELDS////////////////////////////////
-        Facility f ; //the facility 
+        Facility f ; //the node's facility 
         boolean visited = false; //boolean for traversal
         ArrayList<DirectedGraphEdge> outgoingEdges; //list of outgoing edges
 
         /**
          * Constructor for class DirectedGraphNode<K>
-         * @param key the key for the node
+         * @param facility the facility for the node
          */
         public DirectedGraphNode(Facility f)
         {
-           this.f =f;
-           outgoingEdges = new ArrayList<>();
+            this.f =f;
+            outgoingEdges = new ArrayList<>();
         }
 
         /////////////////////////////METHODS////////////////////////////////
@@ -34,36 +35,64 @@ public class DirectedGraph
         /**
          * Method returnClosestNeighbor returns the closest vertex to this vertex
          * Closest is in a weighted sense
-         * @return the closest neighbor 
+         * @return the closest neighbor
          */
-        public Facility returnClosestNeighbor()
+        public String returnClosestNeighbor()
         {
             //if the node has no closest neighbor, return null
             if(outgoingEdges.isEmpty())
             {
                 return null;
-            } else { //go through the outgoingEdge list and find the one with lowest weight
-                DirectedGraphEdge lowestWeight = outgoingEdges.get(0);
-                for(int i = 1 ; i<outgoingEdges.size() ; i++)
-                {
-                    if(outgoingEdges.get(i).weight < lowestWeight.weight) //if weights are equal, just use the first neighbor seen
-                    {
-                        lowestWeight = outgoingEdges.get(i);
-                    }
-                }
-                return lowestWeight.endingNode.f; //returns the node the edge goes to
+            } else { //Sort the outgoing edges list and return the first entry's endingNode
+                Collections.sort(outgoingEdges);
+                return outgoingEdges.get(0).toString();
             }
+        }
+
+        /**
+         * Method returnSortedEdges sorts the node's outgoing edges by weight
+         * @return a sorted array of edges
+         */
+        public ArrayList<DirectedGraphEdge> returnSortedEdges()
+        {
+            Collections.sort(outgoingEdges);
+            return outgoingEdges;
+        }
+
+        @Override
+        public int compareTo(DirectedGraphNode n)
+        {
+            if(this.f.getID() == n.f.getID()){return 0;}
+            else if (this.f.getID() < n.f.getID()) {return -1;}
+            else { return 1;}
+        }
+
+        @Override
+        public boolean equals(Object o) {
+
+            // If the object is compared with itself return true  
+            if (o == this) {
+                return true;
+            }
+            //if o is not an instance of DirectedGraphNode, return false
+            if (!(o instanceof DirectedGraphNode)) {
+                return false;
+            }
+            // cast o to DirectedGraphNode to compare data members 
+            DirectedGraphNode c = (DirectedGraphNode) o;
+            return this.f.equals(c.f);
         }
     }
 
     /**
      * Class DirectedGraphEdge is an inner class that represents the edges in a graph
      */
-    private static class DirectedGraphEdge <K>
+    private static class DirectedGraphEdge implements Comparable<DirectedGraphEdge>
     {
         //////////////////////////////FIELDS/////////////////////////////////////////
         DirectedGraphNode startingNode; //starting node of the edge
         DirectedGraphNode endingNode; //ending node of the edge
+        boolean traversed = false; //variable that states whether a truck has passed on this edge
         int weight; //the weight of the graph
 
         /**
@@ -80,6 +109,16 @@ public class DirectedGraph
 
             //add this edge to startingNode's outgoing edge list
             startingNode.outgoingEdges.add(this);
+            //add this edge to endingNode's outgoing edge list
+            endingNode.outgoingEdges.add(this);
+        }
+
+        @Override
+        public int compareTo(DirectedGraphEdge de)
+        {
+            if(this.weight == de.weight) {return 0;}
+            else if(this.weight < de.weight ) { return -1;}
+            else { return 1;}
         }
     }
 
@@ -100,36 +139,31 @@ public class DirectedGraph
     ///////////////////////////////METHODS//////////////////////////////////////////////////////////////
 
     /**
-     * Method addNode adds a node to the graph with key k
-     * Key should be unique or node should not be added and method should return false
-     * @param k the key of the added node
+     * Method addNode adds a node to the graph with facility f
+     * Facility should be unique or node should not be added and method should return false
+     * @param f the facilityh of the added node
      * @return whether insertion was successful
      */
-    public boolean addNode(Facility f, String ID)
+    public boolean addNode(Facility f)
     {
         //create a new Node
         DirectedGraphNode newNode = new DirectedGraphNode(f); 
-
-        //check if node exists
-        for(DirectedGraphNode node : allNodes)
-        {
-            if(node.f.getID() == newNode.f.getID())
-            {
-                return false;
-            }
+        //safe to add--binary search for the node and add where appropriate
+        int i = Collections.binarySearch(allNodes, newNode); //binary search for number
+        if(i < 0){
+            allNodes.add(-i-1, newNode); //take negative of value and subtract 1
+            return true;
+        } else {
+            return false; //number is in the array
         }
-
-        //safe to add
-        allNodes.add(newNode);
-        return true;
     }
 
     /**
-     * Method addEdge adds an edge from the node with key k1 to the node with key k2 and weight w.
+     * Method addEdge adds an edge from the node with facility one to the node with facility two and weight w.
      * Edge should not be added if either nodes do not exist.
      * If edge already exists, simply change its weight
-     * @param k1 the key of the starting node
-     * @param k2 the key of the second node
+     * @param one the key of the starting node
+     * @param two the key of the second node
      * @param w the weight of the edge
      * @returns true if the edge is successfully added. 
      */
@@ -138,12 +172,12 @@ public class DirectedGraph
         //check if both vertices are in the node's list
         DirectedGraphNode startingNode = getVertex(one);
         DirectedGraphNode endingNode = getVertex(two);
-        
+
         if(startingNode == null || endingNode == null )
         {
             return false;
         }
-        
+
         //check if there is an existent edge between the vertices.  If there is, change the weight
         DirectedGraphEdge potentialEdge = getEdge(one, two);
         if(potentialEdge != null)
@@ -151,31 +185,32 @@ public class DirectedGraph
             potentialEdge.weight = w; //change the weight
             return true; 
         }
-        
+
         //last case: no edge between the vertices, create new edge
         DirectedGraphEdge newEdge = new DirectedGraphEdge(startingNode, endingNode, w);
         return true;
     }
-    
+
     /**
-     * Method getNeighbors returns an ArrayList containing all the neighbors k can reach in one hop
+     * Method getNeighbors returns an arrayList of Facilities containing all the neighbors f can reach in one hop
      * @return the list of neighbors 
      */
-    public ArrayList getNeighbors(Facility f)
+    public ArrayList<String> getNeighbors(Facility f)
     {
-        ArrayList neighbors = new ArrayList<>(); //initialize the array list to hold the keys 
         DirectedGraphNode startingNode = getVertex(f); //get the starting vertex 
-        for(DirectedGraphEdge  edge : startingNode.outgoingEdges)
+        ArrayList<DirectedGraphEdge> neighborEdges = startingNode.returnSortedEdges();
+        ArrayList<String> neighbors = new ArrayList<String>();
+        for(DirectedGraphEdge edge : neighborEdges)
         {
-            neighbors.add(edge.endingNode.f.getID()); //obtain the keys in the starting vertex's neighborhood.  Add to the list
+            neighbors.add(edge.endingNode.f.toString());
         }
-        return neighbors; //return the list
+        return neighbors;
     }
-    
+
     /**
      * Method breadthFirstClosest
      * prints out the closest neighbor each node in the graph can reach in one hop, using breadth first order
-     * @param k1 the key of the vertex to start at
+     * @param f the facility of the vertex to start at
      */
     public void breadthFirstClosest(Facility f)
     {
@@ -187,21 +222,21 @@ public class DirectedGraph
                 node.visited = false;
             }
         }
-        
+
         //obtain the vertex, if applicable
         DirectedGraphNode startingVertex = getVertex(f);
         if(startingVertex == null ) {return;} //can't traverse 
-        
+
         //initialize queue
         Queue <DirectedGraphNode> q = new LinkedList<>();
         q.add(startingVertex);
         startingVertex.visited = true;
-        
+
         //start enqueue/dequeue process
         while(!q.isEmpty())
         {
             DirectedGraphNode u = q.poll();
-            System.out.println(u.f.getID() + " " + u.returnClosestNeighbor()); //print closest neighbor 
+            System.out.println(u.f.toString() + " " + u.returnClosestNeighbor()); //print closest neighbor 
             //enqueue all neighbors, if not already enqueued 
             for(DirectedGraphEdge edge: u.outgoingEdges) //for every outgoing edge
             {
@@ -215,25 +250,20 @@ public class DirectedGraph
     }
 
     /**
-     * Method getVertex searches the allNodes ArrayList for the node with a given key
-     * @param key the key of the node to search for
-     * @return the node with that key (null if non existent)
+     * Method getVertex searches the allNodes ArrayList via binary search for the node with a given key
+     * @param f the facility of the node to search for
+     * @return the node with that facility (null if non existent)
      */
     private DirectedGraphNode getVertex(Facility f)
     {
-        for(DirectedGraphNode node : allNodes)
-        {
-            if(node.f.getID() == f.getID()){ //search by key
-                return node;
-            }
-        }
-        return null; //non existant node 
+        int i = Collections.binarySearch(allNodes, new DirectedGraphNode(f));
+        return i < 0 ? null : allNodes.get(i);
     }
-    
+
     /**
      * Method getEdge returns the edge that connects two vertices, or null if there is none
-     * @param k1 the key of the starting node
-     * @param k2 the key of the second node
+     * @param f1 the key of the starting node
+     * @param f2 the key of the second node
      * @return the edge connecting them
      */
     public DirectedGraphEdge getEdge(Facility f1, Facility f2)
@@ -245,7 +275,7 @@ public class DirectedGraph
         {
             return null; //one or more vertex does not exist -- cannot have an edge
         }
-        
+
         //Case 2: Find the edge that connects the starting vertex to the ending vertex 
         for(DirectedGraphEdge edge : startingVertex.outgoingEdges )
         {
@@ -256,26 +286,26 @@ public class DirectedGraph
         }
         return null; //no edge connects them 
     }
-    
+
     /**
      * Method getEdgeWeight returns and edge's weight
      * @param edge the edge to examine
      * @return its weight
      */
-    public int getEdgeWeight(DirectedGraphEdge edge)
+    public int getEdgeWeight(Facility one, Facility two)
     {
-        return edge.weight;
+        return getEdge(one,two).weight;
     }
-    
+
     /**
-         * Method returnClosestNeighbor returns the closest vertex to the passed paramater
-         * Closest is in a weighted sense
-         * @param key the key of the vertex to examine
-         * @return the closest neighbor to key
-         */
-        public Facility returnClosestNeighbor(Facility f)
-        {
-           DirectedGraphNode node = getVertex(f); //get the node that goes with the key
-           return node.outgoingEdges.size() == 0 ? null: node.returnClosestNeighbor(); //return null, if applicable, or that node's closes neighbor's key
-        }
+     * Method returnClosestNeighbor returns the closest vertex to the passed paramater
+     * Closest is in a weighted sense
+     * @param f the facility of the vertex to examine
+     * @return the closest neighbor to key
+     */
+    public String returnClosestNeighbor(Facility f)
+    {
+        DirectedGraphNode node = getVertex(f); //get the node that goes with the key
+        return node.outgoingEdges.size() == 0 ? null: node.returnClosestNeighbor(); //return null, if applicable, or that node's closes neighbor's key
     }
+}
