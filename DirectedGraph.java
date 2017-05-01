@@ -6,6 +6,7 @@ import java.util.Queue;
  *A DirectedGraph class
  *@author Cameron Zurmuhl
  *@version 4/29/2017 3:59 p.m
+ *Revised by Emmett O'Toole and Cameron Zurmuhl 4/30/2017 10:49 p.m
  */
 public class DirectedGraph
 {
@@ -26,7 +27,7 @@ public class DirectedGraph
          */
         public DirectedGraphNode(Facility f)
         {
-            this.f =f;
+            this.f = f;
             outgoingEdges = new ArrayList<>();
         }
 
@@ -51,7 +52,7 @@ public class DirectedGraph
 
         /**
          * Method returnSortedEdges sorts the node's outgoing edges by weight
-         * @return a sorted array of edges
+         * @return a sorted arrayList of edges
          */
         public ArrayList<DirectedGraphEdge> returnSortedEdges()
         {
@@ -86,7 +87,7 @@ public class DirectedGraph
          * @param endingNode the ending node
          * @param w the weight of the edge
          */
-        public DirectedGraphEdge (DirectedGraphNode startingNode, DirectedGraphNode endingNode, int w)
+        public DirectedGraphEdge (DirectedGraphNode startingNode, DirectedGraphNode endingNode, int w) 
         {
             this.startingNode = startingNode;
             this.endingNode = endingNode;
@@ -94,8 +95,6 @@ public class DirectedGraph
 
             //add this edge to startingNode's outgoing edge list
             startingNode.outgoingEdges.add(this);
-            //add this edge to endingNode's outgoing edge list
-            //endingNode.outgoingEdges.add(this);
         }
 
         @Override
@@ -126,35 +125,26 @@ public class DirectedGraph
     /**
      * Method addNode adds a node to the graph with facility f
      * Facility should be unique or node should not be added and method should return false
-     * @param f the facilityh of the added node
+     * @param f the facility of the added node
      * @return whether insertion was successful
      */
     public boolean addNode(Facility f)
     {
-        int i=Collections.binarySearch(allNodes,new DirectedGraphNode(f));
+        int i=Collections.binarySearch(allNodes,new DirectedGraphNode(f)); //search for node
         if(i<0){
-            allNodes.add(-i-1,new DirectedGraphNode(f));
+            allNodes.add(-i-1,new DirectedGraphNode(f)); //if not found, add at position -i-1
             return true;
         }
         else{
-            return false;
+            return false; //already in the list
         }
-        // In case of problems with binary search
-        /*for(DirectedGraphNode node: allNodes){
-        if(node.f.getID()==(f.getID())){
-        return false;
-        }
-
-        }
-        allNodes.add(new DirectedGraphNode(f));
-        return true;
-         */
     }
 
     /**
      * Method addEdge adds an edge from the node with facility one to the node with facility two and weight w.
      * Edge should not be added if either nodes do not exist.
      * If edge already exists, simply change its weight
+     * Every  pair of vertices in the graph will have an edges going from startingNode to endingNode and vise versa
      * @param one the key of the starting node
      * @param two the key of the second node
      * @param w the weight of the edge
@@ -166,14 +156,14 @@ public class DirectedGraph
         DirectedGraphNode startingNode = getVertex(one);
         DirectedGraphNode endingNode = getVertex(two);
 
-        if(startingNode == null || endingNode == null )
+        if(startingNode == null || endingNode == null ) //can't progress
         {
             return false;
         }
 
         //check if there is an existent edge between the vertices.  If there is, change the weight
-        DirectedGraphEdge potentialEdge = getEdge(one, two);
-        DirectedGraphEdge potentialEdge2= getEdge(two,one);
+        DirectedGraphEdge potentialEdge = getEdge(one, two); //could be an edge from start to end
+        DirectedGraphEdge potentialEdge2= getEdge(two,one); //or an ende from end to start
         if(potentialEdge != null || potentialEdge2 != null)
         {
             potentialEdge.weight = w; //change the weight
@@ -181,24 +171,24 @@ public class DirectedGraph
             return true; 
         }
 
-        //last case: no edge between the vertices, create new edge
+        //last case: no edge between the vertices, create new edge--one going from start to end, another going from end to start
         DirectedGraphEdge newEdge = new DirectedGraphEdge(startingNode, endingNode, w);
         DirectedGraphEdge newEdge2 = new DirectedGraphEdge(endingNode, startingNode, w);
         return true;
     }
 
     /**
-     * Method getNeighbors returns an arrayList of Facilities containing all the neighbors f can reach in one hop
+     * Method getNeighbors returns a sorted arrayList of Facilities containing all the neighbors f can reach in one hop
      * @return the list of neighbors 
      */
-    public ArrayList<String> getNeighbors(Facility f)
+    public ArrayList<Facility> getNeighbors(Facility f)
     {
         DirectedGraphNode startingNode = getVertex(f); //get the starting vertex 
         ArrayList<DirectedGraphEdge> neighborEdges = startingNode.returnSortedEdges();
-        ArrayList<String> neighbors = new ArrayList<String>();
+        ArrayList<Facility> neighbors = new ArrayList<Facility>();
         for(DirectedGraphEdge edge : neighborEdges)
         {
-            neighbors.add(edge.endingNode.f.toString());
+            neighbors.add(edge.endingNode.f);
         }
         return neighbors;
     }
@@ -250,14 +240,14 @@ public class DirectedGraph
      * @param f the facility of the node to search for
      * @return the node with that facility (null if non existent)
      */
-    public DirectedGraphNode getVertex(Facility f)
+    private DirectedGraphNode getVertex(Facility f)
     {
         int i=Collections.binarySearch(allNodes,new DirectedGraphNode(f));
         return i<0? null: allNodes.get(i);
     }
 
     /**
-     * Method getFacility searches the allNodes ArrayList via binary search for the node with a given key
+     * Method getFacility searches the allNodes ArrayList via binary search for the node with a given facility
      * @param f the facility of the node to search for
      * @return the facility of a node(null if non existent)
      */
@@ -301,7 +291,7 @@ public class DirectedGraph
      */
     public int getEdgeWeight(Facility one, Facility two)
     {
-        return getEdge(one,two).weight;
+        return getEdge(one,two)==null? -1: getEdge(one,two).weight;
     }
 
     /**
@@ -315,5 +305,4 @@ public class DirectedGraph
         DirectedGraphNode node = getVertex(f); //get the node that goes with the key
         return node.outgoingEdges.size() == 0 ? null: node.returnClosestNeighbor(); //return null, if applicable, or that node's closes neighbor's key
     }
-
 }
