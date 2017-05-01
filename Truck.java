@@ -1,4 +1,4 @@
-
+import java.util.ArrayList;
 /**
  * Class Truck represents a Truck in the grid
  * A truck carries a certain amount of cargo to other shops
@@ -7,6 +7,7 @@
  * @author Cameron Zurmuhl 
  * @version 4/23/2017 6:49 p.m
  * Revised by Cameron Zurmuhl 4/29/2017 3:27 p.m
+ * Revised by Emmett O'Toole 4-30-17 9:03 p.m
  */
 public class Truck
 {
@@ -22,7 +23,7 @@ public class Truck
 
     private int distanceTravelled; //distance the truck travelled 
 
-    private int numCargo; //number of cargo pieces on the truck
+    private ArrayList<Cargo>cargoList;//List of the cargo on a truck
 
     /**
      * Constructor for objects of class Truck
@@ -31,6 +32,7 @@ public class Truck
     public Truck(Warehouse w)
     {
         homeBase = w;
+        cargoList=new ArrayList<Cargo>();
     }
 
     /////////////////////METHODS//////////////////////////////
@@ -43,7 +45,7 @@ public class Truck
     {
         if(currentWeight + c.getWeight() < cargoLimit ){ //addition of cargo must be lighter than weight limit
             currentWeight += c.getWeight();
-            numCargo++; //update cargo count
+            cargoList.add(c);
         }
         return;
     }
@@ -54,7 +56,7 @@ public class Truck
      */
     public int getCargoCount()
     {
-        return numCargo;
+        return cargoList.size();
     }
 
     /**
@@ -122,7 +124,7 @@ public class Truck
     {
         shopToDeliver = s;
     }
-    
+
     /**
      * Method planRoute plans the truck's delivery route 
      */

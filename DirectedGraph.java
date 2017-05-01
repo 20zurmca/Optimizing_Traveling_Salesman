@@ -37,7 +37,7 @@ public class DirectedGraph
          * Closest is in a weighted sense
          * @return the closest neighbor
          */
-        public String returnClosestNeighbor()
+        public Facility returnClosestNeighbor()
         {
             //if the node has no closest neighbor, return null
             if(outgoingEdges.isEmpty())
@@ -45,7 +45,7 @@ public class DirectedGraph
                 return null;
             } else { //Sort the outgoing edges list and return the first entry's endingNode
                 Collections.sort(outgoingEdges);
-                return outgoingEdges.get(0).toString();
+                return outgoingEdges.get(0).endingNode.f;
             }
         }
 
@@ -67,21 +67,6 @@ public class DirectedGraph
             else { return 1;}
         }
 
-        @Override
-        public boolean equals(Object o) {
-
-            // If the object is compared with itself return true  
-            if (o == this) {
-                return true;
-            }
-            //if o is not an instance of DirectedGraphNode, return false
-            if (!(o instanceof DirectedGraphNode)) {
-                return false;
-            }
-            // cast o to DirectedGraphNode to compare data members 
-            DirectedGraphNode c = (DirectedGraphNode) o;
-            return this.f.equals(c.f);
-        }
     }
 
     /**
@@ -110,7 +95,7 @@ public class DirectedGraph
             //add this edge to startingNode's outgoing edge list
             startingNode.outgoingEdges.add(this);
             //add this edge to endingNode's outgoing edge list
-            endingNode.outgoingEdges.add(this);
+            //endingNode.outgoingEdges.add(this);
         }
 
         @Override
@@ -146,16 +131,24 @@ public class DirectedGraph
      */
     public boolean addNode(Facility f)
     {
-        //create a new Node
-        DirectedGraphNode newNode = new DirectedGraphNode(f); 
-        //safe to add--binary search for the node and add where appropriate
-        int i = Collections.binarySearch(allNodes, newNode); //binary search for number
-        if(i < 0){
-            allNodes.add(-i-1, newNode); //take negative of value and subtract 1
+        int i=Collections.binarySearch(allNodes,new DirectedGraphNode(f));
+        if(i<0){
+            allNodes.add(-i-1,new DirectedGraphNode(f));
             return true;
-        } else {
-            return false; //number is in the array
         }
+        else{
+            return false;
+        }
+        // In case of problems with binary search
+        /*for(DirectedGraphNode node: allNodes){
+        if(node.f.getID()==(f.getID())){
+        return false;
+        }
+
+        }
+        allNodes.add(new DirectedGraphNode(f));
+        return true;
+         */
     }
 
     /**
@@ -180,14 +173,17 @@ public class DirectedGraph
 
         //check if there is an existent edge between the vertices.  If there is, change the weight
         DirectedGraphEdge potentialEdge = getEdge(one, two);
-        if(potentialEdge != null)
+        DirectedGraphEdge potentialEdge2= getEdge(two,one);
+        if(potentialEdge != null || potentialEdge2 != null)
         {
             potentialEdge.weight = w; //change the weight
+            potentialEdge2.weight=w;
             return true; 
         }
 
         //last case: no edge between the vertices, create new edge
         DirectedGraphEdge newEdge = new DirectedGraphEdge(startingNode, endingNode, w);
+        DirectedGraphEdge newEdge2 = new DirectedGraphEdge(endingNode, startingNode, w);
         return true;
     }
 
@@ -254,10 +250,21 @@ public class DirectedGraph
      * @param f the facility of the node to search for
      * @return the node with that facility (null if non existent)
      */
-    private DirectedGraphNode getVertex(Facility f)
+    public DirectedGraphNode getVertex(Facility f)
     {
-        int i = Collections.binarySearch(allNodes, new DirectedGraphNode(f));
-        return i < 0 ? null : allNodes.get(i);
+        int i=Collections.binarySearch(allNodes,new DirectedGraphNode(f));
+        return i<0? null: allNodes.get(i);
+    }
+
+    /**
+     * Method getFacility searches the allNodes ArrayList via binary search for the node with a given key
+     * @param f the facility of the node to search for
+     * @return the facility of a node(null if non existent)
+     */
+    public Facility getFacility(Facility f)
+    {
+        int i=Collections.binarySearch(allNodes,new DirectedGraphNode(f));
+        return i<0? null: allNodes.get(i).f;
     }
 
     /**
@@ -303,9 +310,10 @@ public class DirectedGraph
      * @param f the facility of the vertex to examine
      * @return the closest neighbor to key
      */
-    public String returnClosestNeighbor(Facility f)
+    public Facility returnClosestNeighbor(Facility f)
     {
         DirectedGraphNode node = getVertex(f); //get the node that goes with the key
         return node.outgoingEdges.size() == 0 ? null: node.returnClosestNeighbor(); //return null, if applicable, or that node's closes neighbor's key
     }
+
 }
