@@ -7,6 +7,7 @@ import java.util.ArrayList;
  * 
  * @author Emmett O'Toole
  * @version 4-30-17 9:27 P.M
+ * Additions made by Cameron Zurmuhl 5/1/2017 11:32 p.m
  */
 public class Grid{
 
@@ -21,7 +22,15 @@ public class Grid{
         grid= new DirectedGraph();
         allShops=new ArrayList<Shop>();
         allWare= new ArrayList<Warehouse>();
-
+        createShops("shops.txt");
+        createWarehouse("warehouses1.txt");
+        addEdges();
+    }
+    
+    public static void main(String [] args)
+    {
+        Grid G = new Grid();
+        G.testEdgeWeights();
     }
 
     /**
@@ -72,7 +81,7 @@ public class Grid{
             while((line=reader.readLine())!=null){
                 //Splits the line when these characters appear
                 String[]words=line.split("[\\s\\D]+");
-                //Creates a shop s with the characteristics of the given line
+                //Creates a Warehouse s with the characteristics of the given line
                 Warehouse w=new Warehouse(Integer.parseInt(words[0]),new Location(Integer.parseInt(words[1]),Integer.parseInt(words[2])),Integer.parseInt(words[3]));
                 //Adds the Warehouse to the list of shops
                 allWare.add(w);
@@ -84,6 +93,64 @@ public class Grid{
         catch(IOException e){
             e.printStackTrace();
         }
+    }
+    
+    /**
+     * Method addEdges adds all the edges needed in the graph
+     */
+    public void addEdges()
+    {
+        //connect every shop to every other shop
+        
+        for(int i = 0; i<allShops.size(); i++)
+        {
+            for(int j = i+1; j<allShops.size(); j++)
+            {
+                grid.addEdge(allShops.get(i), allShops.get(j), allShops.get(i).distanceFrom(allShops.get(j)));
+            }
+        }
+        
+        //add an edge begween every warehouse and every shop
+        
+        /*
+        for(int i = 0; i<allWare.size(); i++)
+        {
+            for(int j = 0; j<allShops.size(); j++)
+            {
+                 grid.addEdge(allWare.get(i), allShops.get(j), allWare.get(i).distanceFrom(allShops.get(j)));
+            }
+        }
+        */
+        
+    }
+    
+    public void testEdgeWeights()
+    {
+        
+        for(int i = 0; i<allShops.size(); i++)
+        {
+            for(int j = i+1; j<allShops.size(); j++)
+            {
+               if(grid.getEdgeWeight(allShops.get(i), allShops.get(j)) == allShops.get(i).distanceFrom(allShops.get(j)))
+                System.out.println("same");
+               else
+                System.out.println("diff");
+            }
+        }
+        
+        /*
+        for(int i = 0; i<allWare.size(); i++)
+        {
+            for(int j = 0; j<allShops.size(); j++)
+            {
+                 if(grid.getEdgeWeight(allWare.get(i), allShops.get(j)) == allWare.get(i).distanceFrom(allShops.get(j)))
+                System.out.println("same");
+               else
+                System.out.println("diff");
+            }
+        }
+        */
+        
     }
 
     /**
@@ -99,6 +166,12 @@ public class Grid{
     public ArrayList<Warehouse> getWares(){
         return this.allWare;
     }
-
+    
+    /**
+     * Method getGraph
+     */
+    public DirectedGraph getGraph()
+    {
+        return grid;
+    }
 }
-
