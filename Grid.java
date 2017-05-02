@@ -24,13 +24,11 @@ public class Grid{
         allWare= new ArrayList<Warehouse>();
         createShops("shops.txt");
         createWarehouse("warehouses1.txt");
-        addEdges();
     }
     
     public static void main(String [] args)
     {
         Grid G = new Grid();
-        G.testEdgeWeights();
     }
 
     /**
@@ -95,64 +93,6 @@ public class Grid{
         }
     }
     
-    /**
-     * Method addEdges adds all the edges needed in the graph
-     */
-    public void addEdges()
-    {
-        //connect every shop to every other shop
-        
-        for(int i = 0; i<allShops.size(); i++)
-        {
-            for(int j = i+1; j<allShops.size(); j++)
-            {
-                grid.addEdge(allShops.get(i), allShops.get(j), allShops.get(i).distanceFrom(allShops.get(j)));
-            }
-        }
-        
-        //add an edge begween every warehouse and every shop
-        
-        /*
-        for(int i = 0; i<allWare.size(); i++)
-        {
-            for(int j = 0; j<allShops.size(); j++)
-            {
-                 grid.addEdge(allWare.get(i), allShops.get(j), allWare.get(i).distanceFrom(allShops.get(j)));
-            }
-        }
-        */
-        
-    }
-    
-    public void testEdgeWeights()
-    {
-        
-        for(int i = 0; i<allShops.size(); i++)
-        {
-            for(int j = i+1; j<allShops.size(); j++)
-            {
-               if(grid.getEdgeWeight(allShops.get(i), allShops.get(j)) == allShops.get(i).distanceFrom(allShops.get(j)))
-                System.out.println("same");
-               else
-                System.out.println("diff");
-            }
-        }
-        
-        /*
-        for(int i = 0; i<allWare.size(); i++)
-        {
-            for(int j = 0; j<allShops.size(); j++)
-            {
-                 if(grid.getEdgeWeight(allWare.get(i), allShops.get(j)) == allWare.get(i).distanceFrom(allShops.get(j)))
-                System.out.println("same");
-               else
-                System.out.println("diff");
-            }
-        }
-        */
-        
-    }
-
     /**
      * Get All shops method
      */
