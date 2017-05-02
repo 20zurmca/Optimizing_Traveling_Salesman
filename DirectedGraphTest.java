@@ -1,4 +1,3 @@
-
 import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
@@ -20,6 +19,8 @@ public class DirectedGraphTest
     @Test
     public void graphTest(){
         DirectedGraph test= new DirectedGraph();
+        
+        //create shops and add to nodes list
         Shop one=new Shop(1,new Location(10,10));
         Shop two =new Shop(2,new Location(20,20));
         Shop three=new Shop(3,new Location(30,30));
@@ -28,13 +29,23 @@ public class DirectedGraphTest
         assertEquals(test.addNode(two),true);
         assertEquals(test.addNode(three),true);
         assertEquals(test.addNode(four),true);
+        
+        //try to add a duplicate
         assertEquals(test.addNode(new Shop(1,new Location(10,10))),false);
+        
+        //add edge
         assertEquals(test.addEdge(one,two,5),true);
         assertEquals(test.addEdge(one,three,2),true);
         assertEquals(test.addEdge(two,three,6),true);
         assertEquals(test.addEdge(four,two,8),true);
+        
+        //obtain a facility from the graph
         assertEquals(test.getFacility(one),one);
+        
+        //try to obtain a non-existent facility 
         assertEquals(test.getFacility(new Shop(12,new Location(50,50))),null);
+        
+        //test closest neighbor 
         assertEquals(test.returnClosestNeighbor(one),three);
         assertEquals(test.returnClosestNeighbor(two),one);
     }
@@ -46,15 +57,21 @@ public class DirectedGraphTest
     @Test
     public void edgesTest(){
         DirectedGraph test= new DirectedGraph();
+        //create new shops 
         Shop one=new Shop(1,new Location(10,10));
         Shop two =new Shop(2,new Location(20,20));
         Shop three=new Shop(3,new Location(30,30));
         Shop four=new Shop(4,new Location(40,40));
+        
+        //add them as nodes
         assertEquals(test.addNode(one),true);
         assertEquals(test.addNode(two),true);
         assertEquals(test.addNode(three),true);
         assertEquals(test.addNode(four),true);
+        //create edges 
         test.createEdges();
+        
+        //make sure everyone is connected properly 
         assertEquals(test.getEdgeWeight(one,two),20);
         assertEquals(test.getEdgeWeight(one,three),40);
         assertEquals(test.getEdgeWeight(one,four),60);
