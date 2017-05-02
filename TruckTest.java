@@ -23,7 +23,6 @@ public class TruckTest
         
         //test various get methods
         assertEquals(w, t.getHomeBase());
-        assertEquals(t.getCargoCount(), 0);
         assertEquals(t.getWeight(), 0);
         assertEquals(t.getDistance(), 0);
         
@@ -39,9 +38,6 @@ public class TruckTest
         t.setWeight(-12);
         assertEquals(t.getWeight(), 12);
         
-        //set the distance to something else, assert that it changed
-        t.setDistance(56);
-        assertEquals(t.getDistance(), 56);
     }
     
     @Test
@@ -54,11 +50,9 @@ public class TruckTest
         
         //check get methods
         assertEquals(t.getWeight(), 50);
-        assertEquals(t.getCargoCount(), 1);
         
-        //try to add above the weight and check to make sure cargo count did no go up and weight stayed the same
+        //try to add above the weight and check to make sure weight stayed constant 
         t.loadCargo(new Cargo(470, 2, 4));
         assertEquals(t.getWeight(), 50);
-        assertEquals(t.getCargoCount(), 1);
     }
 }

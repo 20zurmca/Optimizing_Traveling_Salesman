@@ -20,10 +20,12 @@ public class Truck
     private int currentWeight; //current weight of the truck
 
     private Shop shopToDeliver; //shop to deliver to 
+    
+    private Shop currentShop; //shop the truck is currently at
 
     private int distanceTravelled; //distance the truck travelled 
-
-    private ArrayList<Cargo>cargoList;//List of the cargo on a truck
+    
+    private ArrayList<Shop> shopsVisited; //list of prior shops visited
 
     /**
      * Constructor for objects of class Truck
@@ -32,7 +34,7 @@ public class Truck
     public Truck(Warehouse w)
     {
         homeBase = w;
-        cargoList=new ArrayList<Cargo>();
+        shopsVisited = new ArrayList<>();
     }
 
     /////////////////////METHODS//////////////////////////////
@@ -45,18 +47,19 @@ public class Truck
     {
         if(currentWeight + c.getWeight() < cargoLimit ){ //addition of cargo must be lighter than weight limit
             currentWeight += c.getWeight();
-            cargoList.add(c);
+            return;
         }
+        System.out.println("Adding this cargo with weight" + c.getWeight() + "will make the truck too heavy");
         return;
     }
-
+    
     /**
-     * Method getCargoCount returns how many pieces of cargo are on the truck
-     * @return numCargo
+     * Method get shopsVisited returns the list of shops visited
+     * @return list of prior shops
      */
-    public int getCargoCount()
+    public ArrayList<Shop> getprevShops()
     {
-        return cargoList.size();
+        return shopsVisited;
     }
 
     /**
@@ -89,15 +92,6 @@ public class Truck
     }
 
     /**
-     * Method setDistance sets this trucks distance
-     * @param d the distance the truck went
-     */
-    public void setDistance(int d )
-    {
-        distanceTravelled = d;
-    }
-
-    /**
      * Method getDistance gets this trucks distance
      * @return the distance the truck went
      */
@@ -108,12 +102,11 @@ public class Truck
 
     /**
      * Method getShop gets this truck's delivery shop
-     * @return this truck's shop its going to 
+     * @return this truck's currentShop
      */
     public Shop getShop()
     {
-        return shopToDeliver;
-
+        return currentShop;
     }
 
     /**
@@ -122,7 +115,15 @@ public class Truck
      */
     public void setShop(Shop s)
     {
-        shopToDeliver = s;
+        shopToDeliver = s; //this will be the new shop to deliver to 
+        if(currentShop == null) //add to the truck's distance depending on two cases: if this is the first shop from warehouse or not 
+        {
+            distanceTravelled+=homeBase.distanceFrom(s); 
+        } else {
+            distanceTravelled+=currentShop.distanceFrom(s); 
+        }
+        currentShop = s; //update current shop
+        shopsVisited.add(s); //add shops to shops visited 
     }
 
     /**
@@ -130,14 +131,5 @@ public class Truck
      */
     public void planRoute()
     {
-    }
-    
-    /**
-     * Delivery Method
-     * @param Shop a the shop to be delivered to
-     */
-    public void delivery(Shop a){
-        
-        
     }
 }
