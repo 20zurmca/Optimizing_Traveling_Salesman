@@ -24,10 +24,10 @@ public class Shop extends Facility
     /**
      * Get order
      * @param the index of the order
-     * @return Cargo the cargo at that index in the list
+     * @return ArrayList of a shops orders
      */
-    public Cargo getOrder(int index){
-        return orders.get(index);
+    public ArrayList<Cargo> getOrders(){
+        return this.orders;
     }
 
     /**
@@ -57,9 +57,37 @@ public class Shop extends Facility
     public int getID(){
         return this.ID;
     }
-    
+
     public String toString()
     {
         return "S" + ID;
+    }
+
+    /**
+     * Add cargo method
+     * @param Cargo c the cargo to be added
+     */
+    public void addCargo(Cargo c){
+        orders.add(c);
+    }
+
+    /**
+     * Decrease Cargo Method
+     * @param Cargo c
+     */
+    public void decreaseCargo(Cargo c){
+        orders.remove(c);
+    }
+
+    /**
+     * Is orders Empty
+     */
+    public boolean isOrdersEmpty(){
+        if(orders.size()==0){
+            return true;
+        }
+        else
+            return false;
+
     }
 }

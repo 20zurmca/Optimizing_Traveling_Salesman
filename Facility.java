@@ -66,4 +66,13 @@ public abstract class Facility implements Comparable <Facility>
             }
         }
     }
+    
+    /**
+     * Get char method
+     * Returns the char for a facility
+     * @return the letter that represents either a warehouse or a shop
+     */
+    public Character getChar(){
+        return this.letter;
+    }
 }

@@ -63,9 +63,7 @@ public class DirectedGraph
         @Override
         public int compareTo(DirectedGraphNode n)
         {
-            if(this.f.getID() == n.f.getID()){return 0;}
-            else if (this.f.getID() < n.f.getID()) {return -1;}
-            else { return 1;}
+           return this.f.compareTo(n.f);
         }
 
     }
@@ -192,14 +190,14 @@ public class DirectedGraph
      * Method getNeighbors returns an arrayList of Facilities containing all the neighbors f can reach in one hop
      * @return the list of neighbors 
      */
-    public ArrayList<String> getNeighbors(Facility f)
+    public ArrayList<Facility> getNeighbors(Facility f)
     {
         DirectedGraphNode startingNode = getVertex(f); //get the starting vertex 
         ArrayList<DirectedGraphEdge> neighborEdges = startingNode.returnSortedEdges();
-        ArrayList<String> neighbors = new ArrayList<String>();
+        ArrayList<Facility> neighbors = new ArrayList<Facility>();
         for(DirectedGraphEdge edge : neighborEdges)
         {
-            neighbors.add(edge.endingNode.f.toString());
+            neighbors.add(edge.endingNode.f);
         }
         return neighbors;
     }

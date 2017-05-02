@@ -18,17 +18,18 @@ public class Grid{
     /**
      * Constructor for class Grid
      */
-    public Grid(){
+    public Grid(String shopFile,String wareFile){
         grid= new DirectedGraph();
         allShops=new ArrayList<Shop>();
         allWare= new ArrayList<Warehouse>();
-        createShops("shops.txt");
-        createWarehouse("warehouses1.txt");
+        createShops(shopFile);
+        createWarehouse(wareFile);
+        grid.createEdges();
     }
-    
+
     public static void main(String [] args)
     {
-        Grid G = new Grid();
+        Grid G = new Grid("shops.txt","warehouses1.txt");
     }
 
     /**
@@ -92,7 +93,7 @@ public class Grid{
             e.printStackTrace();
         }
     }
-    
+
     /**
      * Get All shops method
      */
@@ -106,7 +107,7 @@ public class Grid{
     public ArrayList<Warehouse> getWares(){
         return this.allWare;
     }
-    
+
     /**
      * Method getGraph
      */

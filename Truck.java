@@ -131,4 +131,13 @@ public class Truck
     public void planRoute()
     {
     }
+    
+    /**
+     * Delivery Method
+     * @param Shop a the shop to be delivered to
+     */
+    public void delivery(Shop a){
+        
+        
+    }
 }
