@@ -11,12 +11,11 @@ public class Warehouse extends Facility
     private Location position;
     //A stack of trucks
     private Stack<Truck>trucks;
-    //The number of trucks in the stack
-    private int numOfTrucks;
     /**
      * Constructor for objects of class Warehouse
      * @param int id the unique id of the warehous
      * @param Location a the location of the warehouse
+     * @param int the number of trucks
      */
     public Warehouse(int id,Location a,int numberOfTrucks)
     {
@@ -57,22 +56,12 @@ public class Warehouse extends Facility
     public Location getLocation(){
         return this.position;
     }
-
-    /**
-     * Get number of trucks method
-     * @return int the number of trucks in the stack
-     */
-    public int  getNumOfTrucks(){
-        return this.numOfTrucks;
-    }
     
     /**
      * Get next truck method returns a truck from the top of the stack
      * @return Truck the truck from the top of the stack
      */
     public Truck getNextTruck(){
-        //Updates the number of trucks
-        numOfTrucks--;
         //Pops the truck and returns it
         return trucks.pop();
     }
@@ -81,5 +70,9 @@ public class Warehouse extends Facility
     {
         return "W" + ID;
         
+    }
+    
+    public boolean trucksLeft(){
+        return this.trucks.isEmpty();
     }
 }
