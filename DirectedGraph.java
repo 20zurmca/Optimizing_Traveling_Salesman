@@ -143,7 +143,6 @@ public class DirectedGraph
         if(node.f.getID()==(f.getID())){
         return false;
         }
-
         }
         allNodes.add(new DirectedGraphNode(f));
         return true;
@@ -333,9 +332,12 @@ public class DirectedGraph
             //Goes through every node one after i to the end
             for(int j=i+1;j<allNodes.size();j++){
                 //Adds an edge between these two nodes with weight the distance between their two locations
+                if(allNodes.get(i).f instanceof Warehouse && allNodes.get(j).f instanceof Warehouse) //do not add edges between warehouses 
+                {
+                    continue;
+                }
                 this.addEdge(allNodes.get(i).f,allNodes.get(j).f,allNodes.get(i).f.distanceFrom(allNodes.get(j).f));
             }
-
         }
 
     }
