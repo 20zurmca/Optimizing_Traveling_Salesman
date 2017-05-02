@@ -1,4 +1,6 @@
+
 /**
+ **
  * The interface facility can represent any building
  * For this project this will mean a warehouse or a shop
  * 
@@ -10,12 +12,12 @@ public abstract class Facility implements Comparable <Facility>
 {
     protected int ID;
     protected Character letter;
-    
+    protected Location facilityLoc;
     /**
      * Constructor for class Facility
      * @param ID the ID for the Facility\
      */
-    public Facility(int id, Character identifier )
+    public Facility(int id, Character identifier)
     {
         this.ID = id;
         letter = identifier;
