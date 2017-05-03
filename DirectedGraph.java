@@ -186,7 +186,7 @@ public class DirectedGraph
     }
 
     /**
-     * Method getNeighbors returns an arrayList of Facilities containing all the neighbors f can reach in one hop
+     * Method getNeighbors returns an arrayList of Facilities containing all the neighbors f can reach in one hop, ordered closest to furthest
      * @return the list of neighbors 
      */
     public ArrayList<Facility> getNeighbors(Facility f)
@@ -340,5 +340,27 @@ public class DirectedGraph
             }
         }
 
+    }
+    
+    /**
+     * Get closest shop with orders method
+     * Next shop method
+     * @param Facility a the facility from
+     * @param Truck the truck searching for its next shop
+     * which the closest shop with orders is being found
+     */
+    public Shop nextShop(Facility a,Truck t){
+        ArrayList<Facility>adj=this.getNeighbors(a); //returns an arraylist of sorted neighbors by edge weight
+        for(int i=0;i<adj.size();i++){
+            if(adj.get(i) instanceof Shop){ //if the neighbor is a shop
+                Shop s = (Shop)adj.get(i);
+                if(!s.isOrdersEmpty()&&!t.getprevShops().contains(s)){ //if the shop still has orders
+                    return s; //that's that shop we want
+                } else {
+                    continue; //continue to next facility
+                }
+            }
+        }
+        return null; //shops are satisfied
     }
 }

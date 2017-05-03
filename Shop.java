@@ -84,11 +84,7 @@ public class Shop extends Facility
      * Returns true if there are no orders left
      */
     public boolean isOrdersEmpty(){
-        if(orders.size()==0){
-            return true;
-        }
-        else
-            return false;
+        return orders.isEmpty();
 
     }
 }

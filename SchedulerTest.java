@@ -20,7 +20,7 @@ public class SchedulerTest
         Grid test=new Grid("shops.txt","warehouses1.txt");
         ArrayList<Warehouse> ware=test.getWares();
         ArrayList<Shop> shop=test.getShops();
-        Scheduler.schedule(ware.get(1),test.getGraph());
+        //Scheduler.schedule(ware.get(1),test.getGraph());
 
     }
 }

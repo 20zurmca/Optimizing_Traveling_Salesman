@@ -7,7 +7,9 @@ import java.util.ArrayList;
  */
 public class Scheduler
 {
-    public static void schedule(Warehouse a,DirectedGraph grid){
+    private int totalDistance; //total distance of all trucks
+
+    public void schedule(Warehouse a,DirectedGraph grid){
         //All the facilities
         ArrayList<Facility>shops=grid.getNeighbors(a);
 
@@ -23,11 +25,18 @@ public class Scheduler
             Truck current=a.getNextTruck();
             //while the trucks weight is less than 500
             while(current.getWeight()<500){
-                //Goes through the shops
-                //for(int i=0;i<shops.size(){
-
-                //}
+                //Sets the shop
+                Shop s=grid.nextShop(current.getPosition(),current);
+                current.setPosition(s);
+                ArrayList<Cargo>currentOrders=s.getOrders();
+                for(int i=0;i<currentOrders.size();i++){
+                    if(current.loadCargo(currentOrders.get(i))){
+                        s.decreaseCargo(currentOrders.get(i));
+                    }
+                }
             }
+            current.setPosition(a);
+            totalDistance += current.getDistance();
         }
     }
 }
