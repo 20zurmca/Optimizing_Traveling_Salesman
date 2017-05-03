@@ -87,4 +87,13 @@ public class Shop extends Facility
         return orders.isEmpty();
 
     }
+    
+    /**
+     * Method ordersAsString returns the shop's orders as a string representation
+     * @return the orders has a string
+     */
+    public String ordersAsString()
+    {
+        return orders.toString();
+    }
 }

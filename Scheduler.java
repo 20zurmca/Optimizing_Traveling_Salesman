@@ -8,12 +8,12 @@ import java.util.ArrayList;
 public class Scheduler
 {
     private int totalDistance; //total distance of all trucks
-    
+
     /**
      * Constructor for class Scheduler
      */
     public Scheduler() {}
-    
+
     /**
      * Method schedule schedules a truck's route for a warehouse on the grid
      * @param a the Warehouse with trucks
@@ -26,10 +26,10 @@ public class Scheduler
         //These prints help to test that the method is working
         /*
         for(Facility s:shops){
-            System.out.println("Shop:"+" "+s.toString()+" Distance "+s.distanceFrom(a));
+        System.out.println("Shop:"+" "+s.toString()+" Distance "+s.distanceFrom(a));
         }
         System.out.println(shops.size());
-        */
+         */
 
         //While the warehouse still has trucks left
         while(a.trucksLeft()){
@@ -40,21 +40,31 @@ public class Scheduler
                 Shop s=grid.getGraph().nextShop(current.getPosition(),current);//get the closest shop to the truck's position 
                 if(s == null )
                 {
+                    System.out.println("The Truck cannot go to a shop and must return.  The distance travelled of the truck is: " + current.getDistance());
                     break;
                 }
-                current.setPosition(s); //that is the truck's new position 
+                
                 ArrayList<Cargo>currentOrders=s.getOrders();
-                for(int i=0;i<currentOrders.size();i++){
-                    if(current.loadCargo(currentOrders.get(i))){ //load up all possible cargo 
+                current.checkFacility(s); //add the facility to the truck's prior checked facilities 
+                
+                System.out.println("Truck from location " + current.getPosition().toString() + " is checking shop " + s.toString() + ". The shop has orders: " + s.ordersAsString());
+                for(int i=0;i<currentOrders.size();){
+                    if(current.loadCargo(currentOrders.get(i))){ //checking if any cargo an be added
+                        System.out.println("The Truck now has weight " + current.getWeight());
                         s.decreaseCargo(currentOrders.get(i));
+                        i = 0; //restart the loop to the beginning 
+                        current.updateDistance(s); //update the truck's travelling distance to the shop 
+                    } else {
+                        i++;
                     }
                 }
             }
-            current.setPosition(a);
+            current.updateDistance(a); //returns back to homeBase
+            System.out.println("This truck's total distance is " + current.getDistance());
             this.totalDistance += current.getDistance();
         }
     }
-    
+
     /**
      * Method get distance returns the total distance
      * @return total distance travelled by trucks

@@ -27,9 +27,9 @@ public class Delivery
     {
         Scheduler sc = new Scheduler();
         ArrayList <Warehouse> allWares = City.getWares();
-        for(Warehouse w : allWares)
+        for(int i = 0; i<allWares.size(); i++)
         {
-            sc.schedule(w, City);
+            sc.schedule(allWares.get(i), City);
         }
         System.out.println(sc.getDistance());
     }

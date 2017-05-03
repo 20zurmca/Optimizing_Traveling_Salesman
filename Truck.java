@@ -45,11 +45,10 @@ public class Truck
      */
     public boolean loadCargo(Cargo c)
     {
-        if(currentWeight + c.getWeight() < cargoLimit ){ //addition of cargo must be lighter than weight limit
+        if(currentWeight + c.getWeight() <= cargoLimit ){ //addition of cargo must be lighter than weight limit
             currentWeight += c.getWeight();
             return true;
         }
-        //System.out.println("Adding this cargo with weight " + c.getWeight() + " will make the truck too heavy");
         return false;
     }
 
@@ -101,15 +100,22 @@ public class Truck
     }
 
     /**
-     * Method setShop sets this truck's delivery shop
+     * Method visit Facility adds to this truck's list of visited facilities 
      * @param s the facility the truck is at
      */
-    public void setPosition(Facility s)
+    public void checkFacility(Facility s)
     {
-        //updates distance travelled
+        shopsVisited.add(s); //add shops to shops visited 
+    }
+    
+    /**
+     * Method updateDistance updates the truck's distance 
+     */
+    public void updateDistance(Facility s)
+    {
+         //updates distance travelled
         distanceTravelled+=currentPosition.distanceFrom(s); 
         currentPosition = s; //this will be the new shop to deliver to 
-        shopsVisited.add(s); //add shops to shops visited 
     }
 
     /**

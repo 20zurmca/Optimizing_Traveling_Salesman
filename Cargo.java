@@ -65,4 +65,10 @@ public class Cargo
     {
         return cargoID;
     }
+    
+    @Override
+    public String toString()
+    {
+        return String.valueOf(weight);
+    }
 }
