@@ -73,6 +73,6 @@ public class Warehouse extends Facility
     }
     
     public boolean trucksLeft(){
-        return this.trucks.isEmpty();
+        return !this.trucks.isEmpty();
     }
 }

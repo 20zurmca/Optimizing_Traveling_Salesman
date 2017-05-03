@@ -27,11 +27,6 @@ public class Grid{
         grid.createEdges();
     }
 
-    public static void main(String [] args)
-    {
-        Grid G = new Grid("shops.txt","warehouses1.txt");
-    }
-
     /**
      * Method to create  shops by reading them from a file and adding them
      * To a graph and a list of shops

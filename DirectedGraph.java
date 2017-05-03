@@ -354,7 +354,7 @@ public class DirectedGraph
         for(int i=0;i<adj.size();i++){
             if(adj.get(i) instanceof Shop){ //if the neighbor is a shop
                 Shop s = (Shop)adj.get(i);
-                if(!s.isOrdersEmpty()&&!t.getprevShops().contains(s)){ //if the shop still has orders
+                if(!s.isOrdersEmpty()&&!t.getprevShops().contains(s)){ //if the shop still has orders and hasn't been visited by Truck t
                     return s; //that's that shop we want
                 } else {
                     continue; //continue to next facility
