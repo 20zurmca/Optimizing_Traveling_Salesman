@@ -124,15 +124,15 @@ public class DirectedGraphTest
         //From warehouse to closest shop
         assertEquals(test.nextShop(a, testTruck),one);
         System.out.println(test.nextShop(a, testTruck));
-        testTruck.setPosition(one);
+        testTruck.updateDistance(one);
+        testTruck.checkFacility(one);
         //Closest shop from the first shop
         assertEquals(test.nextShop(one,testTruck),two);
         System.out.println(test.nextShop(one,testTruck));
-        testTruck.setPosition(two);
+        testTruck.updateDistance(two);
+        testTruck.checkFacility(two);
         //Closest shop from the  second shop
         assertEquals(test.nextShop(two,testTruck),three);
-        System.out.println(test.nextShop(three,testTruck));
-        testTruck.setPosition(three);
 
     }
 }
