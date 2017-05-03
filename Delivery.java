@@ -8,21 +8,21 @@ import java.util.ArrayList;
 public class Delivery
 {
     private Grid City;
-    
+
     /**
      * Constructor for class Delivery 
      */
-    public Delivery()
+    public Delivery(String shops,String warehouses)
     {
-        City = new Grid("shops.txt","warehouses2.txt"); //the gird the city is on 
+        City = new Grid(shops,warehouses); //the gird the city is on 
     }
-    
+
     public static void main(String [] args)
     {
-        Delivery de = new Delivery();
+        Delivery de = new Delivery(args[0],args[1]);
         de.simulate();
     }
-    
+
     public void simulate()
     {
         Scheduler sc = new Scheduler();
