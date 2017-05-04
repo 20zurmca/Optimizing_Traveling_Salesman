@@ -7,16 +7,16 @@
  * Revised by Cameron Zurmuhl 4/29/2017 3:21 p.m
  * Revised by Cameron Zurmuhl 4/30/2017 12:34 p.m
  */
-public class Cargo
+public class Cargo implements Comparable <Cargo>
 {
     ///////////////FIELDS/////////////////////
-    
+
     private int weight; //the weight of the cargo
-    
+
     private int shopID; //the ID the cargo must go to 
-    
+
     private int cargoID; //the ID of the cargo
-    
+
     /**
      * Constructor for class Cargo 
      * @param w the weight of the cargo
@@ -29,9 +29,9 @@ public class Cargo
         this.shopID = shopID;
         this.cargoID = cargoID;
     }
-    
+
     //////////////METHODS//////////////////
-    
+
     /**
      * Method getWeight returns this Cargo's weight 
      * @return this cargo's weight
@@ -40,7 +40,7 @@ public class Cargo
     {
         return weight;
     }
-    
+
     /**
      * Method setWeight sets this Cargo's weight
      * @param w this cargo's new weight
@@ -49,7 +49,7 @@ public class Cargo
     {
         weight = w;
     }
-    
+
     /**
      * Method getShopID returns the cargo's shop ID
      * @return this cargo's shop ID
@@ -58,7 +58,7 @@ public class Cargo
     {
         return shopID;
     }
-    
+
     /**
      * Method getCargoID returns the cargo's ID
      * @return this cargo's ID
@@ -67,10 +67,28 @@ public class Cargo
     {
         return cargoID;
     }
-    
+
     @Override
     public String toString()
     {
         return String.valueOf(weight);
+    }
+
+    /**
+     *Method Compare to compares two cargos
+     *@return int the value based on the comparison
+     */
+    @Override
+    public int compareTo(Cargo c){
+        if(this.weight>c.getWeight()){
+            return 1;
+        }
+        else if(this.weight<c.getWeight()){
+            return -1;
+        }
+        else {
+            return 0;
+        }
+
     }
 }

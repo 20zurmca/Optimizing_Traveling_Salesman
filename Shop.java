@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 /**
  * A shop a a list of orders, a location
  * 
@@ -77,7 +78,7 @@ public class Shop extends Facility
     public boolean isOrdersEmpty(){
         return orders.isEmpty();
     }
-    
+
     /**
      * Method ordersAsString returns the shop's orders as a string representation
      * @return the orders has a string
@@ -85,5 +86,14 @@ public class Shop extends Facility
     public String ordersAsString()
     {
         return orders.toString();
+    }
+
+    /**
+     *Method Sorts orders from largest to smallest 
+     *Sorts the orders of a shop from largest to smallest
+     */
+    public void sortOrders(){
+        Collections.sort(orders);
+        Collections.reverse(orders);
     }
 }

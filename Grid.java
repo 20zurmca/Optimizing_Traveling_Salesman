@@ -13,9 +13,9 @@ public class Grid{
 
     //Instance Variables
     private DirectedGraph grid; //the directed graph 
-    
+
     private ArrayList<Shop> allShops; //all the shops in the graph
-    
+
     private ArrayList<Warehouse> allWare; //all the warehouses in the graph 
     /**
      * Constructor for class Grid
@@ -59,6 +59,10 @@ public class Grid{
                 grid.addNode(s);
             }
             reader.close();
+            //Sorts all the lists of cargo for every shop
+            for(int i=0;i<allShops.size();i++){
+                allShops.get(i).sortOrders();
+            }
         }
         catch(IOException e){
             e.printStackTrace();
@@ -118,7 +122,7 @@ public class Grid{
     {
         return grid;
     }
-    
+
     /**
      * Method shopsSatisfied returns whether all the shops have had their orders fullfilled
      * @return whether all the shops have 0 entries for cargo 
@@ -135,7 +139,7 @@ public class Grid{
         }
         return countEmptyShops == allShops.size() ? true: false;
     }
-    
+
     /**
      * Method mainTrucksAvailable returns whether there are trucks in warehouses 1-9
      */
