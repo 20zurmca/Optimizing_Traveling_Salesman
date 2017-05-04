@@ -11,15 +11,17 @@ public class Delivery
     
     /**
      * Constructor for class Delivery 
+     * @param file1 the first file to read in for the grid
+     * @param file2 the second file to read in for the gird
      */
-    public Delivery()
+    public Delivery(String file1, String file2)
     {
-        City = new Grid("shops.txt","warehouses2.txt"); //the gird the city is on 
+        City = new Grid(file1,file2); //the gird the city is on 
     }
     
     public static void main(String [] args)
     {
-        Delivery de = new Delivery();
+        Delivery de = new Delivery(args[0], args[1]);
         de.simulate();
         if(de.getCity().shopsSatisfied()){
             System.out.println("All shops have been satisfied");
