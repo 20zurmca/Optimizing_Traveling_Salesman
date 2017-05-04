@@ -7,8 +7,8 @@ import java.util.ArrayList;
  */
 public class Delivery
 {
-    private Grid City; //the city of operation s
-    
+    private Grid City; //the city of operations
+
     /**
      * Constructor for class Delivery 
      * @param file1 the first file to read in for the grid
@@ -16,9 +16,9 @@ public class Delivery
      */
     public Delivery(String file1, String file2)
     {
-        City = new Grid(file1,file2); //the gird the city is on 
+        City = new Grid(file1,file2); //the grid the city is on 
     }
-    
+
     public static void main(String [] args)
     {
         Delivery de = new Delivery(args[0], args[1]);
@@ -27,18 +27,28 @@ public class Delivery
             System.out.println("All shops have been satisfied");
         }
     }
-    
+
     public void simulate()
     {
         Scheduler sc = new Scheduler();
-        ArrayList <Warehouse> allWares = City.getWares();
-        for(int i = 0; i<allWares.size(); i++)
-        {
-            sc.schedule(allWares.get(i), City);
+        ArrayList <Warehouse> allWares = City.getWares(); //get all the warehouses 
+        while(City.mainTrucksAvailable()){ //while warehouses 1-9 have trucks (not master warehouse)
+           for(int i = 0; i<allWares.size();i++)
+            {
+                if(allWares.get(i).trucksLeft()){ //dispatch trucks from those warehouses, alternating one at a time per warehouse 
+                    sc.schedule(allWares.get(i), City);
+                }
+            }
         }
-        System.out.println(sc.getDistance());
+        
+        
+        while(!City.shopsSatisfied()) //only use master warehouse when all other trucks have been exaughsted 
+        {
+            sc.schedule(allWares.get(allWares.size()-1), City);
+        }
+        System.out.println("\nThe total distance travelled by all the trucks is: " + sc.getDistance()); //total distance 
     }
-    
+
     private Grid getCity()
     {
         return City;

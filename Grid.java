@@ -135,4 +135,20 @@ public class Grid{
         }
         return countEmptyShops == allShops.size() ? true: false;
     }
+    
+    /**
+     * Method mainTrucksAvailable returns whether there are trucks in warehouses 1-9
+     */
+    public boolean mainTrucksAvailable()
+    {
+        int countWares = 0;
+        for(int i = 0; i<allWare.size()-1; i++) //go through the list of warehouses and count those that still have available trucks
+        {
+            if(allWare.get(i).trucksLeft())
+            {
+                countWares++;
+            }
+        }
+        return countWares != 0 ? true: false; 
+    }
 }

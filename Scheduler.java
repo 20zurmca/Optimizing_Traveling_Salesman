@@ -22,44 +22,41 @@ public class Scheduler
     public void schedule(Warehouse a,Grid grid){
         //All the neighboring facilities from a
         ArrayList<Facility>shops=grid.getGraph().getNeighbors(a);
+        System.out.println();
 
-        //While the warehouse still has trucks left
-        while(a.trucksLeft()){
-            System.out.println();
-            //Set current truck to the next truck that the warehouse has
-            Truck current=a.getNextTruck();
-            while(current.getWeight()<500){ //traverse grid as long as weight is less than 500
-                Shop s=grid.getGraph().nextShop(current.getPosition(),current);//get the closest shop to the truck's position (see DirectedGraph class for more details)
-                if(s == null )
-                {
-                    System.out.println("The Truck cannot go to a shop and must return.  The distance travelled of the truck is: " + current.getDistance());
-                    break;
-                }
+        //Set current truck to the next truck that the warehouse has
+        Truck current=a.getNextTruck();
+        while(current.getWeight()<500){ //traverse grid as long as weight is less than 500
+            Shop s=grid.getGraph().nextShop(current.getPosition(),current);//get the closest shop to the truck's position (see DirectedGraph class for more details)
+            if(s == null )
+            {
+                System.out.println("The Truck cannot go to a shop and must return.  The distance travelled of the truck is: " + current.getDistance());
+                break;
+            }
 
-                ArrayList<Cargo>currentOrders=s.getOrders();
-                current.checkFacility(s); //add the facility to the truck's prior checked facilities 
+            ArrayList<Cargo>currentOrders=s.getOrders();
+            current.checkFacility(s); //add the facility to the truck's prior checked facilities 
 
-                System.out.println("Truck from location " + current.getPosition().toString() + " is checking shop " + s.toString() + ".  The shop is distance: " + current.getPosition().distanceFrom(s) + " and has orders: " + s.ordersAsString());
-                for(int i=0;i<currentOrders.size();){ //check if any of the orders can be added to the truck
-                    if(current.loadCargo(currentOrders.get(i))){ //checking if any cargo an be added
-                        System.out.println("The Truck can go to shop and pick up the cargo order with weight " + currentOrders.get(i) + ", and now has weight: " + current.getWeight());
+            System.out.println("Truck from location " + current.getPosition().toString() + " is checking shop " + s.toString() + ".  The shop is distance: " + current.getPosition().distanceFrom(s) + " and has orders: " + s.ordersAsString());
+            for(int i=0;i<currentOrders.size();){ //check if any of the orders can be added to the truck
+                if(current.loadCargo(currentOrders.get(i))){ //checking if any cargo an be added
+                    System.out.println("The Truck can go to shop and pick up the cargo order with weight " + currentOrders.get(i) + ", and now has weight: " + current.getWeight());
 
-                        s.decreaseCargo(currentOrders.get(i));
-                        i = 0; //restart the loop to the beginning to continue checking orders 
-                        current.updateDistance(s); //update the truck's travelling distance to the shop since this shop can be satisfied  
-                        System.out.println("Total Distance Travelled by this truck so far: " + current.getDistance());
-                    } else {
-                        i++; //progress through the cargo list to search for acceptable cargo
-                        if(i == currentOrders.size()){
-                            System.out.println("No orders can be fullfilled");
-                        }
+                    s.decreaseCargo(currentOrders.get(i));
+                    current.updateDistance(s); //update the truck's travelling distance to the shop since this shop can be satisfied  
+                    System.out.println("Total Distance Travelled by this truck so far: " + current.getDistance());
+                    i = 0; //restart the loop to the beginning to continue checking orders 
+                } else {
+                    i++; //progress through the cargo list to search for acceptable cargo
+                    if(i == currentOrders.size()){
+                        System.out.println("No orders can be fullfilled");
                     }
                 }
             }
-            current.updateDistance(a); //returns back to homeBase
-            System.out.println("This truck's total distance is " + current.getDistance() + " after returning back to base");
-            this.totalDistance += current.getDistance();
         }
+        current.updateDistance(a); //returns back to homeBase
+        System.out.println("This truck's total distance is " + current.getDistance() + " after returning back to base");
+        this.totalDistance += current.getDistance();
     }
 
     /**

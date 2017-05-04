@@ -11,7 +11,7 @@ public class Warehouse extends Facility
     private Stack<Truck>trucks;
     /**
      * Constructor for objects of class Warehouse
-     * @param int id the unique id of the warehous
+     * @param int id the unique id of the warehouse
      * @param Location a the location of the warehouse
      * @param int the number of trucks
      */
