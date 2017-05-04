@@ -33,19 +33,19 @@ public class Truck
     {
         homeBase = w;
         shopsVisited = new ArrayList<>();
-        currentPosition=w;
+        currentPosition=w; //set starting position at the wareHouse
     }
 
     /////////////////////METHODS//////////////////////////////
 
     /**
      * Method loadCargo adds to this truck's weight
-     * @param c cargo to add
+     *@param c cargo to add
      *@return boolean whether or not the load was successful
      */
     public boolean loadCargo(Cargo c)
     {
-        if(currentWeight + c.getWeight() <= cargoLimit ){ //addition of cargo must be lighter than weight limit
+        if(currentWeight + c.getWeight() <= cargoLimit ){ //addition of cargo must be at most weight limit
             currentWeight += c.getWeight();
             return true;
         }
@@ -117,14 +117,7 @@ public class Truck
         distanceTravelled+=currentPosition.distanceFrom(s); 
         currentPosition = s; //this will be the new shop to deliver to 
     }
-
-    /**
-     * Method planRoute plans the truck's delivery route 
-     */
-    public void planRoute()
-    {
-    }
-
+    
     /**
      *Get postion method returns the facility the shop is at
      *@return Facility that the truck is at

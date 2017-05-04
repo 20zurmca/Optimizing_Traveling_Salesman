@@ -20,6 +20,8 @@ public class Cargo
     /**
      * Constructor for class Cargo 
      * @param w the weight of the cargo
+     * @param shopID the ID of the shop
+     * @param cargoID the ID of the cargo
      */
     public Cargo(int w, int shopID, int cargoID)
     {

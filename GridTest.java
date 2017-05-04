@@ -31,35 +31,4 @@ public class GridTest
         assertEquals(shopTest.size(), 200);
         assertEquals(wareTest.size(), 10);
     }
-
-    @Test
-    public void testEdges()
-    {
-        Grid test = new Grid("shops.txt","warehouses1.txt");
-        ArrayList<Shop>shopTest=test.getShops();
-        ArrayList<Warehouse>wareTest=test.getWares();
-
-        //Edge Weights should be the same as distance between facilities 
-
-        //checking warehouses between shops
-
-        for(int i = 0; i<wareTest.size(); i++)
-        {
-            for(int j = 0; j<shopTest.size(); j++)
-            {
-                //assertEquals(test.getGraph().getEdgeWeight(wareTest.get(i), shopTest.get(j)), wareTest.get(i).distanceFrom(shopTest.get(j)));
-            }
-        }
-
-        //checking shops between shops
-        for(int i = 0; i<shopTest.size(); i++)
-        {
-            for(int j = i+1; j<shopTest.size(); j++)
-            {
-                //assertEquals(test.getGraph().getEdgeWeight(shopTest.get(i),shopTest.get(j)), shopTest.get(i).distanceFrom(shopTest.get(j)));
-            }
-        }
-
-        
-    }
 }

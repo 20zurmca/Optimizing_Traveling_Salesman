@@ -7,8 +7,6 @@ import java.util.Stack;
  */
 public class Warehouse extends Facility
 {
-    //The location of the warehouse
-    private Location position;
     //A stack of trucks
     private Stack<Truck>trucks;
     /**
@@ -20,7 +18,7 @@ public class Warehouse extends Facility
     public Warehouse(int id,Location a,int numberOfTrucks)
     {
         super(id, 'W');
-        this.position=a;
+        this.facilityLoc=a;
         //Initializes the stack of trucks
         this.trucks=new Stack<Truck>();
         //Adds empty trucks to the stack
@@ -38,7 +36,7 @@ public class Warehouse extends Facility
      */
     public int distanceFrom(Facility x)
     {
-        return position.distance(x.getLocation());
+        return facilityLoc.distance(x.getLocation());
     }
 
     /**
@@ -54,7 +52,7 @@ public class Warehouse extends Facility
      * @return Location the location of the warehouse
      */
     public Location getLocation(){
-        return this.position;
+        return this.facilityLoc;
     }
     
     /**

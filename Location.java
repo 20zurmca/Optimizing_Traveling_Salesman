@@ -1,7 +1,6 @@
-
 /**
  * A location has an x and y coordinate
- * It acts as a location on the 100 X 100 grid
+ * It serves as a tuple representing the location on the 100 X 100 grid
  * 
  * @author Emmett O'Toole 
  * @version 4-23-17
@@ -9,12 +8,13 @@
 public class Location
 {
     // instance variables 
-    private int x;
-    private int y;
+    private int x; //x locationn
+    private int y; //y location
 
     /**
      * Constructor for objects of class Location
-     * @param int x the x coordinate and int y the y coordinate
+     * @param x the x coordinate 
+     * @param y the y coordinate
      */
     public Location(int x,int y)
     {
@@ -24,7 +24,7 @@ public class Location
 
     /**
      * Get x method
-     * @return int the x coordinate
+     * @return the x coordinate
      */
     public int getX()
     {
@@ -33,7 +33,7 @@ public class Location
 
     /**
      * Get y method
-     * @return int the x coordinate
+     * @return the y coordinate
      */
     public int getY()
     {
@@ -42,8 +42,8 @@ public class Location
 
     /**
      * Calculate Distance between two locations method
-     * @param the location to be compared to this location
-     * @return int the distance between two locations
+     * @param a the location to be compared to this location
+     * @return the distance between two locations
      */
     public int distance(Location a){
         int xDist=Math.abs(this.x-a.getX());

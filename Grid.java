@@ -12,11 +12,15 @@ import java.util.ArrayList;
 public class Grid{
 
     //Instance Variables
-    private DirectedGraph grid;
-    private ArrayList<Shop> allShops;
-    private ArrayList<Warehouse> allWare;
+    private DirectedGraph grid; //the directed graph 
+    
+    private ArrayList<Shop> allShops; //all the shops in the graph
+    
+    private ArrayList<Warehouse> allWare; //all the warehouses in the graph 
     /**
      * Constructor for class Grid
+     * @param shopFile the file containing the shops
+     * @param wareFile the file containing the wareHouses
      */
     public Grid(String shopFile,String wareFile){
         grid= new DirectedGraph();
@@ -30,6 +34,7 @@ public class Grid{
     /**
      * Method to create  shops by reading them from a file and adding them
      * To a graph and a list of shops
+     * @param fileName the name of the file containing the shop information
      */
     public void createShops(String fileName){
         BufferedReader reader=null;
@@ -61,8 +66,8 @@ public class Grid{
     }
 
     /**
-     * Method to create Warehouses by reading them from a file and adding them
-     * To a graph and a list of shops
+     * Method to create Warehouses by reading them from a file and adding them too a graph and a list of shops
+     * @param fileName the name of the file to read from  
      */
     public void createWarehouse(String fileName){
         BufferedReader reader=null;
@@ -91,6 +96,7 @@ public class Grid{
 
     /**
      * Get All shops method
+     * @return all the shops on the grid 
      */
     public ArrayList<Shop> getShops(){
         return this.allShops;
@@ -98,6 +104,7 @@ public class Grid{
 
     /**
      * Get all ware method
+     * @return the list of all warehouses 
      */
     public ArrayList<Warehouse> getWares(){
         return this.allWare;
@@ -105,9 +112,27 @@ public class Grid{
 
     /**
      * Method getGraph
+     * @return the connected grid 
      */
     public DirectedGraph getGraph()
     {
         return grid;
+    }
+    
+    /**
+     * Method shopsSatisfied returns whether all the shops have had their orders fullfilled
+     * @return whether all the shops have 0 entries for cargo 
+     */
+    public boolean shopsSatisfied()
+    {
+        int countEmptyShops = 0;
+        for(Shop shop: allShops)
+        {
+            if(shop.isOrdersEmpty())
+            {
+                countEmptyShops++;
+            }
+        }
+        return countEmptyShops == allShops.size() ? true: false;
     }
 }

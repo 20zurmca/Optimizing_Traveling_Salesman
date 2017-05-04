@@ -76,7 +76,6 @@ public class DirectedGraph
         //////////////////////////////FIELDS/////////////////////////////////////////
         DirectedGraphNode startingNode; //starting node of the edge
         DirectedGraphNode endingNode; //ending node of the edge
-        boolean traversed = false; //variable that states whether a truck has passed on this edge
         int weight; //the weight of the graph
 
         /**
@@ -138,15 +137,6 @@ public class DirectedGraph
         else{
             return false;
         }
-        // In case of problems with binary search
-        /*for(DirectedGraphNode node: allNodes){
-        if(node.f.getID()==(f.getID())){
-        return false;
-        }
-        }
-        allNodes.add(new DirectedGraphNode(f));
-        return true;
-         */
     }
 
     /**

@@ -7,22 +7,25 @@ import java.util.ArrayList;
  */
 public class Delivery
 {
-    private Grid City;
-
+    private Grid City; //the city of operation s
+    
     /**
      * Constructor for class Delivery 
      */
-    public Delivery(String shops,String warehouses)
+    public Delivery()
     {
-        City = new Grid(shops,warehouses); //the gird the city is on 
+        City = new Grid("shops.txt","warehouses2.txt"); //the gird the city is on 
     }
-
+    
     public static void main(String [] args)
     {
-        Delivery de = new Delivery(args[0],args[1]);
+        Delivery de = new Delivery();
         de.simulate();
+        if(de.getCity().shopsSatisfied()){
+            System.out.println("All shops have been satisfied");
+        }
     }
-
+    
     public void simulate()
     {
         Scheduler sc = new Scheduler();
@@ -32,5 +35,10 @@ public class Delivery
             sc.schedule(allWares.get(i), City);
         }
         System.out.println(sc.getDistance());
+    }
+    
+    private Grid getCity()
+    {
+        return City;
     }
 }

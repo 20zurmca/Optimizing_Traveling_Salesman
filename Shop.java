@@ -8,17 +8,16 @@ import java.util.ArrayList;
 public class Shop extends Facility 
 {
     //Instance Variables
-    private ArrayList<Cargo>orders;
-    private Location shopLoc;
+    private ArrayList<Cargo>orders; //list of oders the shop has 
     /**
      * Constructor for Shop 
-     * @param Location a the location of the shop
-     * @param int id the unique id of the shop
+     * @param a the location of the shop
+     * @param id the unique id of the shop
      */
     public Shop(int id, Location a){
         super(id, 'S');
         this.orders=new ArrayList<Cargo>();
-        this.shopLoc=a;
+        this.facilityLoc=a;
     }
 
     /**
@@ -35,27 +34,19 @@ public class Shop extends Facility
      * @return the shop location
      */
     public Location getLocation(){
-        return this.shopLoc;
+        return this.facilityLoc;
     }
 
     /**
      * Distance from method
      * Uses the distance method from location to calculate 
      * The distance between a warehouse and a given location
-     * @param  Location x the location from which the distance of the warehouse is being measured
-     * @return  int the distance
+     * @param x the location from which the distance of the warehouse is being measured
+     * @return the distance from this facility to x
      */
     public int distanceFrom(Facility x)
     {
-        return shopLoc.distance(x.getLocation());
-    }
-
-    /**
-     * Get id method
-     * @return int the unique id of the warehouse
-     */
-    public int getID(){
-        return this.ID;
+        return facilityLoc.distance(x.getLocation());
     }
 
     public String toString()
@@ -65,7 +56,7 @@ public class Shop extends Facility
 
     /**
      * Add cargo method
-     * @param Cargo c the cargo to be added
+     * @param c the cargo to be added
      */
     public void addCargo(Cargo c){
         orders.add(c);
@@ -85,7 +76,6 @@ public class Shop extends Facility
      */
     public boolean isOrdersEmpty(){
         return orders.isEmpty();
-
     }
     
     /**
