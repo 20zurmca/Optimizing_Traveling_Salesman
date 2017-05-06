@@ -33,4 +33,21 @@ public class WarehouseTest
         assertEquals(five.distanceFrom(six),94);
         assertEquals(six.distanceFrom(five),94);
     }
+
+    /**
+     * Test method that tests the methods of warehouse
+     */
+    @Test
+    public void testWarehouse(){
+        //Removes trucks and tests the trucks left method
+        Warehouse one=new Warehouse(1,new Location(10,5),3);
+        one.getNextTruck();
+        assertEquals(one.trucksLeft(),true);
+        one.getNextTruck();
+        assertEquals(one.trucksLeft(),true);
+        one.getNextTruck();
+        assertEquals(one.trucksLeft(),false);
+        //Tests the to string method
+        assertEquals(one.toString(),"W1");
+    }
 }

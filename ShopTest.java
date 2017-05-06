@@ -33,4 +33,18 @@ public class ShopTest
         assertEquals(five.distanceFrom(six),94);
         assertEquals(six.distanceFrom(five),94);
     }
+
+    /**
+     *Method that tests various methods of shop
+     */
+    @Test
+    public void testShopMethods(){
+        Shop test=new Shop(1,new Location(10,10));
+        assertEquals(test.isOrdersEmpty(),true);
+        Cargo one=new Cargo(10,10,10);
+        test.addCargo(one);
+        assertEquals(test.isOrdersEmpty(),false);
+        test.decreaseCargo(one);
+        assertEquals(test.isOrdersEmpty(),true);
+    }
 }
