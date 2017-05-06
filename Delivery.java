@@ -11,8 +11,8 @@ public class Delivery
 
     /**
      * Constructor for class Delivery 
-     * @param file1 the first file to read in for the grid
-     * @param file2 the second file to read in for the gird
+     * @param file1 the first file to read in for the grid (warehouses)
+     * @param file2 the second file to read in for the gird (shops)
      */
     public Delivery(String file1, String file2)
     {
@@ -32,7 +32,7 @@ public class Delivery
     {
         Scheduler sc = new Scheduler();
         ArrayList <Warehouse> allWares = City.getWares(); //get all the warehouses 
-        while(City.mainTrucksAvailable()){ //while warehouses 1-9 have trucks (not master warehouse)
+        while(City.mainTrucksAvailable()){ //while warehouses 1-9 have trucks, dispatch one truck at a time, per warehouse  
            for(int i = 0; i<allWares.size();i++)
             {
                 if(allWares.get(i).trucksLeft()){ //dispatch trucks from those warehouses, alternating one at a time per warehouse 
@@ -40,16 +40,17 @@ public class Delivery
                 }
             }
         }
-        
+       
         
         while(!City.shopsSatisfied()) //only use master warehouse when all other trucks have been exaughsted 
         {
             sc.schedule(allWares.get(allWares.size()-1), City);
         }
-        System.out.println("\nThe total distance travelled by all the trucks is: " + sc.getDistance()); //total distance 
+        System.out.println("-----------------------------------RESULTS----------------------------------------");
+        System.out.println("The total distance travelled by all the trucks is: " + sc.getDistance()); //total distance 
     }
 
-    private Grid getCity()
+    public Grid getCity()
     {
         return City;
     }

@@ -63,7 +63,7 @@ public class DirectedGraph
         @Override
         public int compareTo(DirectedGraphNode n)
         {
-           return this.f.compareTo(n.f);
+            return this.f.compareTo(n.f);
         }
 
     }
@@ -92,8 +92,6 @@ public class DirectedGraph
 
             //add this edge to startingNode's outgoing edge list
             startingNode.outgoingEdges.add(this);
-            //add this edge to endingNode's outgoing edge list
-            //endingNode.outgoingEdges.add(this);
         }
 
         @Override
@@ -182,11 +180,11 @@ public class DirectedGraph
     public ArrayList<Facility> getNeighbors(Facility f)
     {
         DirectedGraphNode startingNode = getVertex(f); //get the starting vertex 
-        ArrayList<DirectedGraphEdge> neighborEdges = startingNode.returnSortedEdges();
+        ArrayList<DirectedGraphEdge> neighborEdges = startingNode.returnSortedEdges(); 
         ArrayList<Facility> neighbors = new ArrayList<Facility>();
         for(DirectedGraphEdge edge : neighborEdges)
         {
-            neighbors.add(edge.endingNode.f);
+            neighbors.add(edge.endingNode.f); //add the ending nodes of the edges to neighbors array
         }
         return neighbors;
     }
@@ -331,7 +329,7 @@ public class DirectedGraph
         }
 
     }
-    
+
     /**
      * Get closest shop with orders method
      * Next shop method
@@ -352,5 +350,26 @@ public class DirectedGraph
             }
         }
         return null; //shops are satisfied
+    }
+    
+    /**
+     * Method nextWarehouse returns the next closest warehouse to a facility's position
+     * @param a the facility to check for adjacent warehouses
+     * @return the closest warehouse to a facilty 
+     */
+    public Warehouse nextWarehouse(Facility a)
+    {
+        ArrayList<Facility>adj=this.getNeighbors(a); //returns an arraylist of sorted neighbors by edge weight
+        for(int i=0;i<adj.size();i++){
+            if(adj.get(i) instanceof Warehouse){ //if the neighbor is a shop
+                Warehouse w = (Warehouse)adj.get(i);
+                if(w.trucksLeft()){
+                    return w;
+                } else {
+                    continue;
+                }
+            }
+        }
+        return null; //no next closest warehouse with available trucks
     }
 }
