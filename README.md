@@ -1,6 +1,7 @@
 # Project3
 Final Project for CS150
 
+DOCUMENTATION: file:///C:/Users/camer/Desktop/CS150/Project3/doc/index.html
 
 This project presented the travelling salesman problem.  The problem asks from a single vertex in a connected graph, what is the shortest path to every other vertex and back.  The context involves coffee shops and warehouses on a 100x100 connected grid (a weighted, directed graph).  The shops and warehouses serve as vertices, and edges connect every shop and warehouse together with weight equal to their distance apart.  The shops have cargo orders that delivery trucks need to satisfy in one day; however, the trucks cannot load past 500 units of cargo.  If the truck does fill up to this capacity, it must return to its originating warehouse.  Each truck must deliver a full cargo-order for a specific cargo; there are five different types of cargo.  The number of trucks per warehouse varies, and there exists one “master warehouse” at the edge of the grid with unlimited trucks.  The objective of the project is to minimize the travelling distance of all trucks while satisfying all the shops. This problem is NP-hard, meaning it cannot be solved in polynomial time.  Thus, I took a greedy approach in solving the problem.  In my analysis, I will analyze the efficiency of my optimization.  My hypothesis is that my solution is efficient in most cases, but not the best.
 
