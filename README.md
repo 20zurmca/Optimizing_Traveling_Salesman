@@ -7,6 +7,6 @@ In my solution, I mapped the shops and warehouses on a weighted, directed graph.
 
 <b>To run on terminal type java Delivery "shops.txt" "warehouses1.txt" or java Delivery "shops.txt" "warehouses2.txt" after compiling</b>
 
-The Professor gave a semi-optimized solution to this problem and came to a total traveled distance of ~13,000 distance units for all shops to be satisfied. Our algorithm reached 12190 units, a substantial immprovement. The report outlines more detail.
+The Professor gave a semi-optimized solution to this problem and came to a total traveled distance of ~13,000 distance units for all shops to be satisfied. Our algorithm reached 12190 units, a substantial immprovement. The <a href = https://github.com/20zurmca/Optimizing_Traveling_Salesman/blob/master/Project%20Report.pdf> report </a> outlines more detail.
 
 
