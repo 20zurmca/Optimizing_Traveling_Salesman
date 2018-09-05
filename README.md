@@ -16,7 +16,7 @@ The Professor gave a semi-optimized solution to this problem and came to a total
 <p><b> Launching the program </b></p>
 <img src = "https://github.com/20zurmca/Optimizing_Traveling_Salesman/blob/master/Demo/args.PNG" alt = "Command Line Demonstration" />
 
-<p><b> Running the simulation </b></p>
+<p><b> Running the simulation (abbreviated) </b></p>
 <img src = "https://github.com/20zurmca/Optimizing_Traveling_Salesman/blob/master/Demo/simulation.PNG" alt = "Running Simulation" />
 
 <p><b> Acquiring Results </b></p>
