@@ -9,7 +9,7 @@ In my solution, I mapped the shops and warehouses on a weighted, directed graph.
 
 The Professor gave a semi-optimized solution to this problem and came to a total traveled distance of ~13,000 distance units for all shops to be satisfied. Our algorithm reached 12190 units, a substantial immprovement. The <a href = https://github.com/20zurmca/Optimizing_Traveling_Salesman/blob/master/Project%20Report.pdf> report </a> outlines more detail.
 
-<p>Click <a href = https://github.com/20zurmca/Optimizing_Traveling_Salesman/blob/master/grade.pdff> here </a> for project grade </p>
+<p>Click <a href = https://github.com/20zurmca/Optimizing_Traveling_Salesman/blob/master/grade.pdf> here </a> for project grade </p>
 <p>Click <a href = https://github.com/20zurmca/Optimizing_Traveling_Salesman/blob/master/projectExplanation.pdf> here </a> for official project proposal </p>
 
 ## Demo
