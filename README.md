@@ -14,7 +14,7 @@ The Professor gave a semi-optimized solution to this problem and came to a total
 
 ## Demo
 <p><b> Launching the program </b></p>
-<img src = "https://github.com/20zurmca/Optimizing_Traveling_Salesman/blob/master/Demo/args.PNG" alt = "Command Line Demonstration" />
+<img src = "https://github.com/20zurmca/Optimizing_Traveling_Salesman/blob/master/Demo/args.PNG" alt = "Command Line Demonstration" height = 24 />
 
 <p><b> Running the simulation (abbreviated) </b></p>
 <img src = "https://github.com/20zurmca/Optimizing_Traveling_Salesman/blob/master/Demo/simulation.PNG" alt = "Running Simulation" />
